@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geolocalización</title>
+</head>
+<body>
+    <script>
+        // Ask if navigator supports API
+        if (navigator.geolocation) {
+            // Ask for position
+            navigator.geolocation.getCurrentPosition(
+                    // If we obtain position
+                    function (data) {
+                        alert("Latitud "+ data.coords.latitude +
+                                "\nLongitud " + data.coords.longitude);
+                    },
+                    // If user didn't authorize geolocalization request
+                    function () {
+                        alert("El usuario no autorizó la geolocalización");
+                    }
+            );
+        } else {
+            // In non supported case, show mesage
+            alert("El navegador no soporta geolocalización");
+        }
+    </script>
+</body>
+</html>
