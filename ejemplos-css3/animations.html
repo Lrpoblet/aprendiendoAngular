@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animaciones</title>
+    <style>
+        /* Define animation rule, must have a name*/
+        @keyframes myCuteAnimation {
+            0% {
+                background: deeppink;
+            }
+
+            25% {
+                background: yellow;
+            }
+
+            50% {
+                background: green;
+            }
+
+            75% {
+                background: aqua;
+            }
+
+            100% {
+                background: deeppink;
+            }
+        }
+
+        /* Use defined animation */
+        .my-animation {
+            width: 200px;
+            height: 200px;
+            background: deeppink;
+            animation: myCuteAnimation 12s;
+        }
+    </style>
+</head>
+<body>
+    <div class="my-animation"></div>
+</body>
+</html>
