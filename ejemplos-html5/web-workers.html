@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Workers</title>
+</head>
+<body>
+<script>
+    // Check if API is supported
+    if (typeof (Worker) !== "undefined") {
+        // Creta worker
+        var worker = new Worker("web-workers.js");
+
+        // Subscribe to event messages
+        worker.onmessage = function (event) {
+            window.console.log(event.data);
+        }
+    }
+</script>
+</body>
+</html>
