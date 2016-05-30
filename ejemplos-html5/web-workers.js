@@ -9,3 +9,6 @@ function countDown(from) {
         }, 1000);
     }
 }
+
+// Init countdown
+countDown(10);
