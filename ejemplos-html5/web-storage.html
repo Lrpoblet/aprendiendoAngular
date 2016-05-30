@@ -15,7 +15,20 @@
 
         // Get value from storage
         var localMessage = localStorage.getItem("valorLocal");
-        alert(localMessage);
+        //alert(localMessage);
+
+        localStorage.removeItem("valorLocal");
+
+        // Session Storage
+
+        // Write value in session storage
+        //sessionStorage.setItem("valorDeSesion", "Soy un valor almacenado en sessionStorage");
+
+        // Get value from session storage
+        var sessionMessage = sessionStorage.getItem("valorDeSesion");
+        alert(sessionMessage);
+
+       // sessionStorage.removeItem("valorLocal");
     }
 </script>
 </body>
