@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Storage</title>
+</head>
+<body>
+<script>
+    // Ask if API is supported
+    if (typeof (Storage) !== "undefined") {
+        // Local Storage
+
+        // Write value in storage
+        localStorage.setItem("valorLocal", "Soy un valor almacenado en LocalStorage");
+
+        // Get value from storage
+        var localMessage = localStorage.getItem("valorLocal");
+        alert(localMessage);
+    }
+</script>
+</body>
+</html>
