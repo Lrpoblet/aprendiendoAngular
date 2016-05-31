@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo de controladores y scopes</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+</head>
+<body ng-app="test">
+    <div ng-controller="myFirstController">
+        <p>{{ message }}</p>
+        <button ng-click="sayHi()">Saludar</button>
+        <p>{{ anotherMessage }}</p>
+    </div>
+<script>
+    // Application setter
+    angular.module("test", []);
+
+    // 'myFirstController' controller
+    angular
+            .module("test")
+            .controller("myFirstController", function ($scope) {
+                $scope.message = "Soy un mensaje en un controlador";
+
+                $scope.sayHi = function () {
+                    alert("Buenas noches los pastores");
+                };
+
+                var anotherMessage = "Soy otro mensaje en este controlador"; // Won't do anything, not published in scope
+                // $scope.anotherMessage = "Soy otro mensaje en este controlador"; // This would work
+            });
+</script>
+</body>
+</html>
