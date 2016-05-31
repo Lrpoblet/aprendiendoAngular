@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo de Inyección de dependencias</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+</head>
+<body ng-app="test">
+
+    <div class="view1" ng-controller="Controller1">
+        <h2>Inyección con anotación de Array en línea</h2>
+        <ul>
+            <li ng-repeat="message in messages">{{ message }}</li>
+        </ul>
+    </div>
+
+    <div class="view2" ng-controller="Controller2">
+        <h2>Inyección con propiedad $inject</h2>
+        <ul>
+            <li ng-repeat="message in messages">{{ message }}</li>
+        </ul>
+    </div>
+
+    <div class="view3" ng-controller="Controller3">
+        <h2>Inyección con parámetros de función <span style="color: red;">NO RECOMENDADO</span></h2>
+        <ul>
+            <li ng-repeat="message in messages">{{ message }}</li>
+        </ul>
+    </div>
+
+<script>
+    // Module setter
+    angular.module("test", []);
+
+    // Messages Service
+    angular
+        .module("test")
+        .service("MessageService", function () {
+            this.getMessages = function () {
+                return [
+                    "hola caracola",
+                    "tenemos sueñito"
+                ]
+            };
+        });
+
+    // Dependencies injection with array annotation in line
+    angular
+        .module("test")
+        .controller(
+            "Controller1",
+            [
+                "$scope",
+                "MessageService",
+                function ($scope, MessageService) {
+                    $scope.messages = MessageService.getMessages();
+                }
+            ]
+        );
+
+    // Dependencies injection with $inject property
+    var controller2 = function ($scope, MessageService) {
+        $scope.messages = MessageService.getMessages();
+    };
+
+    controller2.$inject = [ "$scope", "MessageService" ];
+
+    angular
+        .module("test")
+        .controller("Controller2", controller2);
+
+    // Dependencies injection with function parameters
+
+    angular
+        .module("test")
+        .controller("Controller3", function ($scope, MessageService) {
+            $scope.messages = MessageService.getMessages();
+        });
+
+    // Mimified code who doesn't work
+    //angular.module("test").controller("Controller3",function(e,s){e.messages=s.getMessages()});
+</script>
+</body>
+</html>
