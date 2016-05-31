@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo de controladores y scopes padre e hijo</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+</head>
+<body ng-app="test">
+    <div ng-controller="myFirstController">
+        <p>{{ message }}</p>
+        <button ng-click="sayHi()">Saludar</button>
+        <p>{{ anotherMessage }}</p>
+    </div>
+
+    <div ng-controller="parentController">
+        <button ng-click="notifySon()">Notificar al hijo</button>
+        <div ng-controller="sonController">
+            <button ng-click="notifyParent()">Notificar al padre</button>
+        </div>
+    </div>
+<script>
+    // Application setter
+    angular.module("test", []);
+
+    // 'myFirstController' controller
+    angular
+            .module("test")
+            .controller("myFirstController", function ($scope) {
+                $scope.message = "Soy un mensaje en un controlador";
+
+                $scope.sayHi = function () {
+                    alert("Buenas noches los pastores");
+                };
+
+                var anotherMessage = "Soy otro mensaje en este controlador"; // Won't do anything, not published in scope
+                // $scope.anotherMessage = "Soy otro mensaje en este controlador"; // This would work
+            });
+
+    // Parent controller
+    angular
+            .module("test")
+            .controller("parentController", function ($scope) {
+                // Subscribe to event
+                $scope.$on("EventFromSon", function (event, data) {
+                    alert("Controlador padre:\n" + data);
+                });
+
+                // Send notification to son controller
+                $scope.notifySon = function () {
+                    $scope.$broadcast("EventFromParent", "Soy un evento enviado desde el controlador padre");
+                }
+            });
+
+    // Son controller
+    angular
+            .module("test")
+            .controller("sonController", function ($scope) {
+                // Subscribe to event
+                $scope.$on("EventFromParent", function (event, data) {
+                    alert("Controlador hijo:\n" + data);
+                });
+
+                // Send notification to parent controller
+                $scope.notifyParent = function () {
+                    $scope.$emit("EventFromSon", "Soy un evento enviado desde el controlador hijo");
+                }
+            })
+</script>
+</body>
+</html>
