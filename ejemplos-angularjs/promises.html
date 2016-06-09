@@ -11,6 +11,7 @@
         <button ng-click="resolveContent()">Promesa que resuelva mensaje</button>
         <button ng-click="rejectContent()">Promesa que rechace mensaje</button>
         <button ng-click="getPosition()">Promesa que obtiene coordenadas</button>
+        <button ng-click="getPackedValue()">Valor empaquetado en promesa</button>
     </div>
 
 <script>
@@ -58,6 +59,10 @@
                 );
                 return defered.promise;
             };
+
+            this.packedValueInPromise = function () {
+                return $q.when({"message": "Tengo hambre"});
+            }
         });
 
     // Coontroller with promises examples
@@ -90,6 +95,13 @@
             $scope.getPosition = function () {
                 Promises.getPosition().then(function (coordinates) {
                     console.log(coordinates);
+                });
+            };
+
+            $scope.getPackedValue = function () {
+                Promises.packedValueInPromise().then(function (data) {
+                    // $q.when will always be resolved
+                    console.log(data);
                 });
             }
 
