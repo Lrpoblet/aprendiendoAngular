@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo de Filtros</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+</head>
+<body ng-app="test">
+
+<div ng-controller="filters">
+    <div>
+        <label>Filtro currency</label>
+        <span>{{ price | currency }}</span>
+    </div>
+    <div>
+        <label>Filtro date</label>
+        <span>{{ now | date:'fullDate' }}</span>
+    </div>
+    <div>
+        <label>Filtro lowercase</label>
+        <span>{{ choniText | lowercase }}</span>
+    </div>
+    <div>
+    <label>Filtro uppercase</label>
+    <span>{{ choniText | uppercase }}</span>
+</div>
+</div>
+
+<script>
+    // Module setter
+    angular.module("test", []);
+
+    angular
+        .module("test")
+        .controller("filters", function ($scope) {
+            $scope.price = 2546543.89;
+            $scope.now = new Date();
+            $scope.choniText = "OlA kE aSe";
+        });
+
+</script>
+</body>
+</html>
