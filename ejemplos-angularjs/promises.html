@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promesas</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+</head>
+<body ng-app="test">
+
+    <div ng-controller="PromisesExamples">
+        <button ng-click="resolveContent()">Promesa que resuelva mensaje</button>
+        <button ng-click="rejectContent()">Promesa que rechace mensaje</button>
+        <button ng-click="getPosition()">Promesa que obtiene coordenadas</button>
+    </div>
+
+<script>
+    // Module setter
+    angular.module("test", []);
+
+    // Service with promises examples
+    angular
+        .module("test")
+        .service("Promises", function ($q) {
+            // Get content resolving function
+            this.content = function () {
+                // Crete deferred object
+                var defered = $q.defer();
+
+                setTimeout(function () {
+                    // Resolve promise
+                    defered.resolve("Soy un mensaje en una promesa resuelta.");
+
+                },
+                3000);
+
+                return defered.promise;
+            };
+
+            this.rejectMessage = function () {
+                var defered = $q.defer();
+
+                setTimeout(function () {
+                            // Resolve promise
+                            defered.reject("Se ha ido a la caca.");
+
+                        },
+                        3000);
+
+                return defered.promise;
+            };
+
+            this.getPosition = function () {
+                var defered = $q.defer();
+                navigator.geolocation.getCurrentPosition(
+                    function (data) {
+                        defered.resolve({ coords: data.coords});
+                    }
+                );
+                return defered.promise;
+            };
+        });
+
+    // Coontroller with promises examples
+    angular
+        .module("test")
+        .controller("PromisesExamples", function ($scope, Promises) {
+
+            $scope.resolveContent = function () {
+                // Use then to work with promise value
+                Promises.content()
+                    .then(function (data) {
+                        // First parameter attends promise resolved
+                        alert(data);
+                    });
+            };
+
+            $scope.rejectContent = function () {
+                Promises.rejectMessage()
+                    .then(
+                        function (data) {
+                            // First parameter attends promise resolved
+                            alert("Success: " + data);
+                        },
+                        function (data) {
+                            alert("Error: " + data)
+                        }
+                    );
+            };
+
+            $scope.getPosition = function () {
+                Promises.getPosition().then(function (coordinates) {
+                    console.log(coordinates);
+                });
+            }
+
+        })
+
+</script>
+</body>
+</html>
