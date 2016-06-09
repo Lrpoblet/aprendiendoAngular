@@ -23,7 +23,19 @@
     <div>
     <label>Filtro uppercase</label>
     <span>{{ choniText | uppercase }}</span>
-</div>
+    </div>
+    <div>
+        <label>Filtro lowercase custom</label>
+        <span>{{ minusText }}</span>
+    </div>
+    <div>
+        <label>Filtro uppercase custom</label>
+        <span>{{ mayusText }}</span>
+    </div>
+    <div>
+        <label>Capital</label>
+        <span>{{ lipsum | CapitalLetter }}</span>
+    </div>
 </div>
 
 <script>
@@ -32,10 +44,23 @@
 
     angular
         .module("test")
-        .controller("filters", function ($scope) {
+        .controller("filters", function ($scope, $filter) {
             $scope.price = 2546543.89;
             $scope.now = new Date();
             $scope.choniText = "OlA kE aSe";
+            $scope.minusText = $filter("lowercase")("PrObAndO");
+            $scope.mayusText = $filter("uppercase")("PrObAndO");
+            $scope.lipsum = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
+        });
+
+    angular
+        .module("test")
+        .filter("CapitalLetter", function () {
+            // Filter always returns a function
+            // Filter always expects one parameter (entry data)
+            return function (text) {
+                return text[0].toUpperCase() + text.substring(1).toLowerCase();
+            }
         });
 
 </script>
