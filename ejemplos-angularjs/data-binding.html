@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enlace de datos: Data Binding</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+</head>
+<body ng-app="test">
+
+
+    <div ng-controller="DataBinding">
+        <p><strong>Two-way data binding</strong></p>
+        <p><input type="text" ng-model="textTwoWay"></p>
+        <p>{{ textTwoWay }}</p>
+
+        <p><strong>Two-way data binding con updateOn</strong></p>
+        <p>
+            <input
+                type="text"
+                ng-model="textTwoWayUpdateOn"
+                ng-model-options="{ updateOn: 'blur' }">
+        </p>
+        <p>{{ textTwoWayUpdateOn }}</p>
+
+        <p><strong>Two-way data binding con debounce</strong></p>
+        <p>
+            <input
+                type="text"
+                ng-model="textTwoWayDebounce"
+                ng-model-options="{ debounce: 3000 }">
+        </p>
+        <p>{{ textTwoWayDebounce }}</p>
+
+        <p><strong>One-time binding</strong></p>
+        <p>
+            <input
+                    type="text"
+                    ng-model="textOneTime">
+        </p>
+        <p>{{ ::textOneTime }}</p>
+
+        <button ng-click="showInConsole()">Mostrar en consola</button>
+    </div>
+
+<script>
+    // Module setter
+    angular.module("test", []);
+
+    angular
+        .module("test")
+        .controller("DataBinding", function ($scope) {
+            $scope.textTwoWay = "Soy un texto con two-way data binding";
+            $scope.textTwoWayUpdateOn = "Soy un texto con two-way data binding que se sincroniza con updateOn";
+            $scope.textTwoWayDebounce = "Soy un texto con two-way data binding que se sincroniza con debounce";
+            $scope.textOneTime = "Soy un texto que sincroniza una sola vez";
+
+            $scope.showInConsole = function () {
+                console.log("$scope.textTwoWay: " + $scope.textTwoWay);
+                console.log("$scope.textTwoWayUpdateOn: " + $scope.textTwoWayUpdateOn);
+                console.log("$scope.textTwoWayDebounce: " + $scope.textTwoWayDebounce);
+                console.log("$scope.textOneTime: " + $scope.textOneTime);
+            }
+        });
+
+
+</script>
+</body>
+</html>
